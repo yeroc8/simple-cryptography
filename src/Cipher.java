@@ -18,34 +18,50 @@ public class Cipher {
         return text;
     }
 
-    public void transpose() {
+    public void transpose(boolean backwards) {
         int textLen = text.length();
         int keyLen = key.length();
         char[][] matrix = new char[keyLen][(textLen+keyLen-1)/keyLen+1]; // round up width and add key space
+        char[] keyArr = key.toCharArray();
+        // use sorted key first if running backwards
+        if (backwards) {
+            Arrays.sort(keyArr);
+        }
         // split text into matrix
         for (int i = 0; i <= textLen; i++) {
             char ch;
-            // place the key in the first column for sorting
+            // place key in the first column for sorting
             if (i == 0) {
-                ch = key.charAt(i);
+                ch = keyArr[i];
             } else {
                 ch = text.charAt(i-1);
             }
             matrix[i%keyLen][i/keyLen] = ch;
         }
-        // fill empty slots in last column with Xs
-        for (char[] row : matrix) {
-            if (row[row.length-1] == 0) {
-                row[row.length-1] = 'X';
+        if (!backwards) {
+            // fill empty slots in last column with Xs
+            for (char[] row : matrix) {
+                if (row[row.length-1] == 0) {
+                    row[row.length-1] = 'X';
+                }
             }
         }
         // sort rows by key
         Arrays.sort(matrix, new Comparator<char[]>() {
             @Override
             public int compare(char[] o1, char[] o2) {
-                return Character.compare(o1[0], o2[0]);
+                if (backwards) {
+                    // FIXME: repeated chars
+                    return Integer.compare(key.indexOf(o1[0]), key.indexOf(o2[0]));
+                } else {
+                    return Character.compare(o1[0], o2[0]);
+                }
             }
         });
         // TODO: reconstruct text
+    }
+
+    public void transpose() {
+        transpose(false);
     }
 }
