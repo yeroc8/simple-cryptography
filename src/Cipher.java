@@ -23,10 +23,13 @@ public class Cipher {
         int keyLen = key.length();
         char[][] matrix = new char[keyLen][(textLen+keyLen-1)/keyLen+1]; // round up width and add key space
         // split text into matrix
-        for (int i = 0; i < textLen; i++) {
-            char ch = text.charAt(i);
+        for (int i = 0; i <= textLen; i++) {
+            char ch;
+            // place the key in the first column for sorting
             if (i == 0) {
                 ch = key.charAt(i);
+            } else {
+                ch = text.charAt(i-1);
             }
             matrix[i%keyLen][i/keyLen] = ch;
         }
