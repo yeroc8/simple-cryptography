@@ -25,7 +25,7 @@ public class Cipher {
         }
         // split text into matrix
         for (int i = 0; i <= textLen; i++) {
-            matrix[i%keyLen][i/keyLen] = text.charAt(i);
+            matrix[i%keyLen][i/keyLen+1] = text.charAt(i);
         }
         if (!backwards) {
             // fill empty slots in last column with Xs
