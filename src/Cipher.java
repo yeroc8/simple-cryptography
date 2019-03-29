@@ -1,6 +1,3 @@
-import java.util.Arrays;
-import java.util.Comparator;
-
 public class Cipher {
 
     private String text;
@@ -22,21 +19,13 @@ public class Cipher {
         int textLen = text.length();
         int keyLen = key.length();
         char[][] matrix = new char[keyLen][(textLen+keyLen-1)/keyLen+1]; // round up width and add key space
-        char[] keyArr = key.toCharArray();
-        // use sorted key first if running backwards
-        if (backwards) {
-            Arrays.sort(keyArr);
+        // put key in first column
+        for (int i = 0; i < keyLen; i++) {
+            matrix[i][0] = key.charAt(i);
         }
         // split text into matrix
         for (int i = 0; i <= textLen; i++) {
-            char ch;
-            // place key in the first column for sorting
-            if (i == 0) {
-                ch = keyArr[i];
-            } else {
-                ch = text.charAt(i-1);
-            }
-            matrix[i%keyLen][i/keyLen] = ch;
+            matrix[i%keyLen][i/keyLen] = text.charAt(i);
         }
         if (!backwards) {
             // fill empty slots in last column with Xs
@@ -46,19 +35,7 @@ public class Cipher {
                 }
             }
         }
-        // sort rows by key
-        Arrays.sort(matrix, new Comparator<char[]>() {
-            @Override
-            public int compare(char[] o1, char[] o2) {
-                if (backwards) {
-                    // FIXME: repeated chars
-                    return Integer.compare(key.indexOf(o1[0]), key.indexOf(o2[0]));
-                } else {
-                    return Character.compare(o1[0], o2[0]);
-                }
-            }
-        });
-        // TODO: reconstruct text
+        // TODO: implement conveyor belt algorithm, reconstruct text
     }
 
     public void transpose() {
