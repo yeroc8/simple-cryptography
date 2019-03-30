@@ -35,7 +35,13 @@ public class Cipher {
                 }
             }
         }
-        // TODO: implement conveyor belt algorithm, reconstruct text
+        for (char[] row : matrix) {
+            int shiftAmount = row[0] - '@'; // capital letters start after @
+            for (int i = 1; i < row.length; i++) {
+                // TODO: conveyor belt
+            }
+        }
+        // TODO: reconstruct text
     }
 
     public void transpose() {
