@@ -36,7 +36,7 @@ public class Cipher {
             }
         }
         for (char[] row : matrix) {
-            int shiftAmount = row[0] - '@'; // capital letters start after @
+            int shiftAmount = row[0] - 'A'; // get number A=0, B=1, etc.
             for (int i = 1; i < row.length; i++) {
                 // TODO: conveyor belt
             }
