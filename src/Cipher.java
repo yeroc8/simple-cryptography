@@ -4,8 +4,8 @@ public class Cipher {
     private String key;
 
     public Cipher(String text, String key) throws IllegalArgumentException {
-        if (!text.matches("[A-Z]+") || !key.matches("[A-Z]+")) {
-            throw new IllegalArgumentException("Text and key must contain only capital english letters");
+        if (!text.matches("[A-Za-z]+") || !key.matches("[A-Za-z]+")) {
+            throw new IllegalArgumentException("Text and key must contain only english letters");
         }
         this.text = text;
         this.key = key;
@@ -36,7 +36,16 @@ public class Cipher {
             }
         }
         for (char[] row : matrix) {
-            int shiftAmount = row[0] - 'A'; // get number A=0, B=1, etc.
+            // get number A=0, B=1, etc.
+            int shiftAmount;
+            if (Character.isUpperCase(row[0])) {
+                shiftAmount = row[0] - 'A';
+            } else {
+                shiftAmount = row[0] - 'a';
+            }
+            if (backwards) {
+                shiftAmount *= -1;
+            }
             for (int i = 1; i < row.length; i++) {
                 // TODO: conveyor belt
             }
