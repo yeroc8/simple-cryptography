@@ -43,12 +43,20 @@ public class Cipher {
             } else {
                 shiftAmount = row[0] - 'a';
             }
+            // complete rotation does not matter
+            shiftAmount %= row.length - 1;
+            int inverseShift = row.length-1 - shiftAmount;
             if (backwards) {
-                shiftAmount *= -1;
+                // shift the rest of the way to full rotation
+                shiftAmount = inverseShift;
             }
-            for (int i = 1; i < row.length; i++) {
-                // TODO: conveyor belt
-            }
+            // save end part that would get overwritten
+            char[] overflow = new char[shiftAmount];
+            System.arraycopy(row, inverseShift+1, overflow, 0, shiftAmount);
+            // shift beginning to end
+            System.arraycopy(row, 1, row, shiftAmount+1, inverseShift);
+            // put overwritten end at beginning
+            System.arraycopy(overflow, 0, row, 1, shiftAmount);
         }
         // TODO: reconstruct text
     }
