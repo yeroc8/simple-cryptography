@@ -24,7 +24,7 @@ public class Cipher {
             matrix[i][0] = key.charAt(i);
         }
         // split text into matrix
-        for (int i = 0; i <= textLen; i++) {
+        for (int i = 0; i < textLen; i++) {
             matrix[i%keyLen][i/keyLen+1] = text.charAt(i);
         }
         if (!backwards) {
