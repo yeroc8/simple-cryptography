@@ -58,7 +58,12 @@ public class Cipher {
             // put overwritten end at beginning
             System.arraycopy(overflow, 0, row, 1, shiftAmount);
         }
-        // TODO: reconstruct text
+        // reconstruct text
+        char[] textArr = new char[textLen];
+        for (int i = 0; i < textLen; i++) {
+            textArr[i] = matrix[i%keyLen][i/keyLen+1];
+        }
+        text = new String(textArr);
     }
 
     public void transpose() {
