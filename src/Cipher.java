@@ -4,7 +4,7 @@ public class Cipher {
     private String key;
 
     public Cipher(String text, String key) throws IllegalArgumentException {
-        if (!text.matches("[A-Za-z]+") || !key.matches("[A-Za-z]+")) {
+        if (!key.matches("[A-Za-z]+") || !text.matches("[A-Za-z]+")) {
             throw new IllegalArgumentException("Text and key must contain only english letters");
         }
         this.text = text;
