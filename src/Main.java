@@ -9,30 +9,36 @@ import java.io.IOException;
 
 public class Main {
 
+    private static Options options = new Options();
+
     public static void main(String[] args) {
+        options.addOption("h", "help", false, "display this message");
+        options.addOption("d", "decode", false, "decode input instead of encode");
+        options.addOption(Option.builder("i")
+                .longOpt("input")
+                .hasArg()
+                .argName("file")
+                .desc("input file [default: stdin]")
+                .build());
+        options.addOption(Option.builder("o")
+                .longOpt("output")
+                .hasArg()
+                .argName("file")
+                .desc("output file [default: stdout]")
+                .build());
         try {
             run(args);
         } catch (ParseException e) {
             System.err.println(e.getMessage());
-            main(new String[] {"-h"});
-        } catch (IOException e) {
+            HelpFormatter formatter = new HelpFormatter();
+            formatter.printHelp("java -jar simple-cryptography.jar <key> [options]", options);
+        } catch (IOException | IllegalArgumentException e) {
             System.err.println(e.getMessage());
         }
     }
 
-    private static void run(String[] args) throws ParseException, IOException {
-        Options options = new Options();
-        options.addOption("h", "help", false, "display this message");
-        options.addOption(Option.builder("k").longOpt("key").hasArg().desc("cipher key").required().build());
-        options.addOption("d", "decode", false, "decode input instead of encode");
-        options.addOption("i", "input", true, "input file [default: stdin]");
-        options.addOption("o", "output", true, "output file [default: stdout]");
+    private static void run(String[] args) throws ParseException, IOException, IllegalArgumentException {
         CommandLine cli = new DefaultParser().parse(options, args);
-        if (cli.hasOption('h')) {
-            HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp("java -jar simple-cryptography.jar", options);
-            return;
-        }
         byte[] input;
         if (cli.hasOption('i')) {
             input = Files.readAllBytes(Paths.get(cli.getOptionValue('i')));
@@ -46,7 +52,7 @@ public class Main {
         if (encoding == null) {
             encoding = "UTF-8";
         }
-        Cipher cipher = new Cipher(new String(input, encoding), cli.getOptionValue('k'));
+        Cipher cipher = new Cipher(new String(input, encoding), args[0]);
         cipher.transpose(cli.hasOption('d'));
         if (cli.hasOption('o')) {
             Files.write(Paths.get(cli.getOptionValue('o')), cipher.getText().getBytes(), CREATE);
