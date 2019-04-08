@@ -30,7 +30,8 @@ public class Main {
         CommandLine cli = new DefaultParser().parse(options, args);
         if (cli.hasOption('h')) {
             HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp("simple-cryptography", options);
+            formatter.printHelp("java -jar simple-cryptography.jar", options);
+            return;
         }
         byte[] input;
         if (cli.hasOption('i')) {
