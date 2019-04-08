@@ -16,7 +16,7 @@ import java.awt.Color;
  */
 
 
-public class Crypter {	
+public class Crypter extends Base32 {	
 	private Picture copy;
 	private Picture key;
 	private int bytes;
@@ -25,7 +25,7 @@ public class Crypter {
 	 * Construct Crypter object. 
 	 * @param key insert Key-picture for encryption or decryption. Must be .png! 
 	 */
-	public Crypter(String key){
+	public Crypter(String key, String text, String key1){
 		this.key = new Picture(key);
 		copy = new Picture(key);
 		bytes = this.key.width() * this.key.height()-2;
