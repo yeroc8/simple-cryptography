@@ -16,7 +16,7 @@ import java.awt.Color;
  */
 
 
-public class Crypter extends Base32 {	
+public class Crypter{	
 	private Picture copy;
 	private Picture key;
 	private int bytes;
