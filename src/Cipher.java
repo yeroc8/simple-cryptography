@@ -1,7 +1,7 @@
 public class Cipher {
 
-    private String text;
-    private String key;
+    protected String text;
+    protected String key;
 
     public Cipher(String text, String key) throws IllegalArgumentException {
         if (!key.matches("[A-Za-z]+") || !text.matches("[A-Za-z]+")) {
@@ -12,7 +12,7 @@ public class Cipher {
     }
 
     public String getText() {
-        return text;
+        return this.text;
     }
 
     public void transpose(boolean backwards) {
