@@ -25,8 +25,7 @@ public class Crypter extends Base32 {
 	 * Construct Crypter object. 
 	 * @param key insert Key-picture for encryption or decryption. Must be .png! 
 	 */
-	public Crypter(String key, String text, String key1){
-		super(text, key1);
+	public Crypter(String key){
 		this.key = new Picture(key);
 		copy = new Picture(key);
 		bytes = this.key.width() * this.key.height()-2;
