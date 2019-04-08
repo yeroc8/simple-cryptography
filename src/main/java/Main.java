@@ -12,6 +12,9 @@ public class Main {
     private static Options options = new Options();
 
     public static void main(String[] args) {
+        if (args.length == 0) {
+            printHelp();
+        }
         options.addOption("h", "help", false, "display this message");
         options.addOption("d", "decode", false, "decode input instead of encode");
         options.addOption(Option.builder("i")
@@ -30,8 +33,7 @@ public class Main {
             run(args);
         } catch (ParseException e) {
             System.err.println(e.getMessage());
-            HelpFormatter formatter = new HelpFormatter();
-            formatter.printHelp("java -jar simple-cryptography.jar <key> [options]", options);
+            printHelp();
         } catch (IOException | IllegalArgumentException e) {
             System.err.println(e.getMessage());
         }
@@ -59,5 +61,10 @@ public class Main {
         } else {
             System.out.println(cipher.getText());
         }
+    }
+
+    private static void printHelp() {
+        HelpFormatter formatter = new HelpFormatter();
+        formatter.printHelp("java -jar simple-cryptography.jar <key> [options]", options);
     }
 }
