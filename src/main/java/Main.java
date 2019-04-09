@@ -60,7 +60,7 @@ public class Main {
         if (cli.hasOption('o')) {
             Files.write(Paths.get(cli.getOptionValue('o')), cipher.getText().getBytes(), CREATE);
         } else {
-            System.out.println(cipher.getText());
+            System.out.println("\n"+cipher.getText());
         }
     }
 
