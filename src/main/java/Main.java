@@ -12,9 +12,6 @@ public class Main {
     private static Options options = new Options();
 
     public static void main(String[] args) {
-        if (args.length == 0) {
-            printHelp();
-        }
         options.addOption("h", "help", false, "display this message");
         options.addOption("d", "decode", false, "decode input instead of encode");
         options.addOption(Option.builder("i")
@@ -29,6 +26,10 @@ public class Main {
                 .argName("file")
                 .desc("output file [default: stdout]")
                 .build());
+        if (args.length == 0 || args[0].equals("-h") || args[0].equals("--help")) {
+            printHelp();
+            return;
+        }
         try {
             run(args);
         } catch (ParseException e) {
