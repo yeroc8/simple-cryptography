@@ -1,5 +1,5 @@
 
-public class Test {
+public class ImageStego {
 	public static void main(String[] args) {
 		Crypter c = new Crypter("key.png"); // Key picture.
 		
