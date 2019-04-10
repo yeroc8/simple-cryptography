@@ -1,2 +1,3 @@
 # Builds
 /target/
+!/target/artifacts/*.jar
