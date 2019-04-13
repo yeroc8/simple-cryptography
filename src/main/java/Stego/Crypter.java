@@ -2,21 +2,11 @@ import java.awt.Color;
 
 /**
  * This class encrypts text into image using key-picture. The same key-picture can be used to obtain the text from the image. 
- *  
- * 
- * To start: Create new Crypter object and use methods encrypt() and decrypt().
- * 
- * If you are able to decrypt any text encrypted by this Crypter, without using the Key-picture during the 
- * process(even if you use several pictures created with the same key and the same string for research), please contact 
- * me @ joonas.vali[2]hotmail.com and explain me how did you manage that. :)
- * 
- * 
- * @author Joonas Vali 2009 Apr.
- * NB: Picture class by Robert Sedgewick and Kevin Wayne is used for IO and image modification.
+ *
  */
 
 
-public class Crypter{	
+public class Crypter {	
 	private Picture copy;
 	private Picture key;
 	private int bytes;
