@@ -4,15 +4,18 @@ public class Cipher {
     protected String key;
 
     public Cipher(String text, String key) throws IllegalArgumentException {
-        if (!key.matches("[A-Za-z]+") || !text.matches("[A-Za-z]+")) {
-            throw new IllegalArgumentException("Text and key must contain only english letters");
+        if (!key.matches("[A-Za-z]+")) {
+            throw new IllegalArgumentException("Key must contain only english letters");
+        }
+        if (!text.matches("[A-Za-z]+")) {
+            throw new IllegalArgumentException("Internal error: Unknown character detected in Cipher.text");
         }
         this.text = text;
         this.key = key;
     }
 
     public String getText() {
-        return this.text;
+        return text;
     }
 
     public void transpose(boolean backwards) {

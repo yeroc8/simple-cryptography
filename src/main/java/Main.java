@@ -55,10 +55,15 @@ public class Main {
         if (encoding == null) {
             encoding = "UTF-8";
         }
-        Cipher cipher = new Cipher(new String(input, encoding), args[0]);
+        Cipher cipher;
+        if (cli.hasOption('d')) {
+            cipher = new Cipher(new String(Base32.decode(new String(input, encoding)), encoding), args[0]);
+        } else {
+            cipher = new Cipher(Base32.encode(input), args[0]);
+        }
         cipher.transpose(cli.hasOption('d'));
         if (cli.hasOption('o')) {
-            Files.write(Paths.get(cli.getOptionValue('o')), cipher.getText().getBytes(), CREATE);
+            Files.write(Paths.get(cli.getOptionValue('o')), cipher.getText().getBytes(encoding), CREATE);
         } else {
             System.out.println("\n"+cipher.getText());
         }
