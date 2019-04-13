@@ -1,3 +1,4 @@
+package Stego;
 import java.awt.Color;
 
 /**
