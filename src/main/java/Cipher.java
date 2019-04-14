@@ -10,6 +10,9 @@ public class Cipher {
         if (!text.matches("[A-Za-z]+")) {
             throw new IllegalArgumentException("Internal error: Unknown character detected in Cipher.text");
         }
+        if (key.length() > text.length()) {
+            key = key.substring(0, text.length());
+        }
         this.text = text;
         this.key = key;
     }
