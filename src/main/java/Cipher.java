@@ -75,4 +75,61 @@ public class Cipher {
     public void transpose() {
         transpose(false);
     }
+    
+    /**
+    @param String, boolean
+    If backwards is false, the program takes the first character of the field text and the variable phrase, adds their 
+    respective indexes together, takes the modulus of said index by 52, and inserts the letter of the resulting index 
+    into a variable newphrase. This continues for every letter of the field text.  Then, newphrase overwrites the field text.
+    If backwards is true, the program subtracts the index phrase from the index of text, and does everything else the 
+    same as if backwards is false. 
+    */
+    public void vigenere(String phrase, boolean backwards)
+    {
+      //Defines variables
+      String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+      char[] alphabet2 = alphabet.toCharArray();
+      StringBuilder newphrase = new StringBuilder();
+      StringBuilder Phrase = new StringBuilder();
+      Phrase.append(phrase);
+      char newchar;
+      int phraseindex, textindex, appendlength;
+      /*
+      If phrase's length is less than text's length, appends "A" to phrase until their lengths are equal.
+      This is to prevent an error from the index being out of range.
+      */
+      if (Phrase.length() < this.text.length())
+      {
+         appendlength = (this.text.length() - Phrase.length());
+         for (int i = 0; i < appendlength; i++)
+         {
+            Phrase.append("A");
+         }
+      }
+      //Creates array versions of text and phrase, so that each letter can be itterated through one at a time.
+      phrase = Phrase.toString();
+      char[] phrase2 = phrase.toCharArray();
+      char[] text2 = text.toCharArray();
+      /*
+      If backwards is false, takes each character from text and phrase, finds their index, and adds them together.
+      If backwards is true, takes each character from text and phrase, finds their index, and subtracts
+      phrase's index from text's index.
+      */
+      for (int j = 0; j < this.text.length(); j++)
+      {
+         phraseindex = alphabet.indexOf(String.valueOf(phrase2[j]));
+         textindex = alphabet.indexOf(String.valueOf(text2[j]));
+         if (!backwards)
+         {
+            newchar = alphabet2[(phraseindex + textindex)%alphabet.length()];
+         }
+         else
+         {
+            newchar = alphabet2[(textindex - phraseindex)%alphabet.length()];
+         }
+         newphrase.append(newchar);
+      }
+      //Saves changes by making text equal to newphrase
+      this.text = newphrase.toString();
+    }
 }

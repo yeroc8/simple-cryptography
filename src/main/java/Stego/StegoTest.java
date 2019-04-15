@@ -5,7 +5,7 @@ public class StegoTest {
 		Crypter c = new Crypter("key.png"); // Key picture.
 		
 		//Crypt
-		//c.encrypt("Hello, there", "secret.png");
+		c.encrypt("Hello, there", "secret.png");
 		
 		//Decrypt
 		System.out.println(c.deCrypt("secret.png"));
