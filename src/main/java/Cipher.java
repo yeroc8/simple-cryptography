@@ -21,10 +21,6 @@ public class Cipher extends Base32 {
     public String getText() {
         return text;
     }
-    
-    public void setText(String text) {
-        this.text = text;
-    }
 
     /**
      * Gets the index of a letter in the alphabet
@@ -68,15 +64,20 @@ public class Cipher extends Base32 {
             int inverseShift = row.length - 1 - shiftAmount;
             if (backwards) {
                 // shift the rest of the way to full rotation
+                int inverse = shiftAmount;
                 shiftAmount = inverseShift;
+                inverseShift = inverse;
             }
             // save end part that would get overwritten
             char[] overflow = new char[shiftAmount];
+            System.out.println(inverseShift + " " + shiftAmount + " " + row.length);
+            System.out.println(row);
             System.arraycopy(row, inverseShift + 1, overflow, 0, shiftAmount);
             // shift beginning to end
             System.arraycopy(row, 1, row, shiftAmount + 1, inverseShift);
             // put overwritten end at beginning
             System.arraycopy(overflow, 0, row, 1, shiftAmount);
+            System.out.println(row);
         }
         // reconstruct text
         char[] textArr = new char[textLen];

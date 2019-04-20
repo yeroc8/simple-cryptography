@@ -11,13 +11,13 @@ public class CompositeTest
       key1 = r.nextLine();
       Cipher c = new Cipher(Base32.encode(text.getBytes()), key1);
       System.out.println(c.getText());
-      //c.transpose(false);
+      c.transpose(false);
       System.out.println(c.getText());
       c.vigenere(false);
       System.out.println(c.getText());
       c.vigenere(true);
       System.out.println(c.getText());
-      //c.transpose(true);
+      c.transpose(true);
       System.out.println(c.getText());
       System.out.println(new String(c.decode(c.getText())));
       
