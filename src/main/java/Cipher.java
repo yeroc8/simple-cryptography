@@ -1,10 +1,9 @@
-public class Cipher extends Base32 {
+public class Cipher {
 
     protected String text;
     protected String key;
 
     public Cipher(String text, String key) throws IllegalArgumentException {
-    	//super(key2);
         if (!key.matches("[A-Za-z]+")) {
             throw new IllegalArgumentException("Key must contain only english letters");
         }
@@ -64,27 +63,22 @@ public class Cipher extends Base32 {
             int inverseShift = row.length - 1 - shiftAmount;
             if (backwards) {
                 // shift the rest of the way to full rotation
-                int inverse = shiftAmount;
                 shiftAmount = inverseShift;
-                inverseShift = inverse;
             }
             // save end part that would get overwritten
             char[] overflow = new char[shiftAmount];
-            System.out.println(inverseShift + " " + shiftAmount + " " + row.length);
-            System.out.println(row);
             System.arraycopy(row, inverseShift + 1, overflow, 0, shiftAmount);
             // shift beginning to end
             System.arraycopy(row, 1, row, shiftAmount + 1, inverseShift);
             // put overwritten end at beginning
             System.arraycopy(overflow, 0, row, 1, shiftAmount);
-            System.out.println(row);
         }
         // reconstruct text
         char[] textArr = new char[textLen];
         for (int i = 0; i < textLen; i++) {
             textArr[i] = matrix[i % keyLen][i / keyLen + 1];
         }
-        this.text = new String(textArr);
+        text = new String(textArr);
     }
 
     public void vigenere(boolean backwards) {
