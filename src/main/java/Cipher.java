@@ -1,9 +1,10 @@
-public class Cipher {
+public class Cipher extends Base32 {
 
     protected String text;
     protected String key;
 
     public Cipher(String text, String key) throws IllegalArgumentException {
+    	//super(key2);
         if (!key.matches("[A-Za-z]+")) {
             throw new IllegalArgumentException("Key must contain only english letters");
         }
@@ -19,6 +20,10 @@ public class Cipher {
 
     public String getText() {
         return text;
+    }
+    
+    public void setText(String text) {
+        this.text = text;
     }
 
     /**
@@ -78,7 +83,7 @@ public class Cipher {
         for (int i = 0; i < textLen; i++) {
             textArr[i] = matrix[i % keyLen][i / keyLen + 1];
         }
-        text = new String(textArr);
+        this.text = new String(textArr);
     }
 
     public void vigenere(boolean backwards) {

@@ -1,6 +1,12 @@
-public class Base32 {
+import Stego.*;
+public class Base32{
 
     private final static String CONVERSION = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdef";
+    
+    //public Base32(String key)
+    //{
+    	//super(key);
+    //}
     
     /**
     Takes the field text, converts it to binary, then takes the first 5 characters and converts them back to decimal.
