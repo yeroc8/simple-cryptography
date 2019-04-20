@@ -9,8 +9,7 @@ public class CompositeTest
       text = r.nextLine();
       System.out.println("Give the key which you want to use for the tranposing cipher: ");
       key1 = r.nextLine();
-      Cipher c = new Cipher("a", key1);
-      c.setText(c.encode(text.getBytes()));
+      Cipher c = new Cipher(Base32.encode(text.getBytes()), key1);
       System.out.println(c.getText());
       //c.transpose(false);
       System.out.println(c.getText());
@@ -20,8 +19,8 @@ public class CompositeTest
       System.out.println(c.getText());
       //c.transpose(true);
       System.out.println(c.getText());
-      c.setText(new String(c.decode(c.getText())));
-      System.out.println(c.getText());
+      System.out.println(new String(c.decode(c.getText())));
+      
       
       
 	}
