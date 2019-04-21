@@ -1,20 +1,25 @@
 public class Cipher {
 
     protected String text;
-    protected String key;
+    protected String[] keys;
+    protected int keysUsed = 0;
+    protected boolean backwards;
 
-    public Cipher(String text, String key) throws IllegalArgumentException {
-        if (!key.matches("[A-Za-z]+")) {
-            throw new IllegalArgumentException("Key must contain only english letters");
-        }
-        if (!text.matches("[A-Za-z]+")) {
-            throw new IllegalArgumentException("Internal error: Unknown character detected in Cipher.text");
-        }
-        if (key.length() > text.length()) {
-            key = key.substring(0, text.length());
+    public Cipher(String text, String[] keys, boolean backwards) throws IllegalArgumentException {
+        for (int i = 0; i < keys.length; i++) {
+            if (!keys[i].matches("[A-Za-z]+")) {
+                throw new IllegalArgumentException("Key must contain only english letters");
+            }
+            if (!text.matches("[A-Za-z]+")) {
+                throw new IllegalArgumentException("Internal error: Unknown character detected in Cipher.text");
+            }
+            if (keys[i].length() > text.length()) {
+                keys[i] = keys[i].substring(0, text.length());
+            }
         }
         this.text = text;
-        this.key = key;
+        this.keys = keys;
+        this.backwards = backwards;
     }
 
     public String getText() {
@@ -35,7 +40,15 @@ public class Cipher {
         }
     }
 
-    public void transpose(boolean backwards) {
+    private String getKey() throws IllegalStateException {
+        if (keysUsed >= keys.length) {
+            throw new IllegalStateException("No keys remaining");
+        }
+        return keys[keysUsed++];
+    }
+
+    public void transpose() throws IllegalStateException {
+        String key = getKey();
         int textLen = text.length();
         int keyLen = key.length();
         char[][] matrix = new char[keyLen][(textLen + keyLen - 1) / keyLen + 1]; // round up width and add key space
@@ -60,11 +73,11 @@ public class Cipher {
             int shiftAmount = letterNum(row[0]);
             // complete rotation does not matter
             shiftAmount %= row.length - 1;
-            int inverseShift = row.length - 1 - shiftAmount;
             if (backwards) {
                 // shift the rest of the way to full rotation
-                shiftAmount = inverseShift;
+                shiftAmount = row.length - 1 - shiftAmount;
             }
+            int inverseShift = row.length - 1 - shiftAmount;
             // save end part that would get overwritten
             char[] overflow = new char[shiftAmount];
             System.arraycopy(row, inverseShift + 1, overflow, 0, shiftAmount);
@@ -81,7 +94,8 @@ public class Cipher {
         text = new String(textArr);
     }
 
-    public void vigenere(boolean backwards) {
+    public void vigenere() throws IllegalStateException {
+        String key = getKey();
         StringBuilder newText = new StringBuilder();
         int caesarShift;
         for (int i = 0; i < text.length(); i++) {

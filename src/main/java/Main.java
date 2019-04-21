@@ -35,12 +35,13 @@ public class Main {
         } catch (ParseException e) {
             System.err.println(e.getMessage());
             printHelp();
-        } catch (IOException | IllegalArgumentException e) {
+        } catch (IOException | IllegalArgumentException | IllegalStateException e) {
             System.err.println(e.getMessage());
         }
     }
 
-    private static void run(String[] args) throws ParseException, IOException, IllegalArgumentException {
+    private static void run(String[] args)
+            throws ParseException, IOException, IllegalArgumentException, IllegalStateException {
         CommandLine cli = new DefaultParser().parse(options, args);
         byte[] input;
         if (cli.hasOption('i')) {
@@ -55,17 +56,27 @@ public class Main {
         if (encoding == null) {
             encoding = "UTF-8";
         }
+        String[] keys = new String[2];
+        int keySplit = args[0].length()/2;
+        keys[0] = args[0].substring(0, keySplit);
+        keys[1] = args[0].substring(keySplit);
         Cipher cipher;
+        byte[] output;
         if (cli.hasOption('d')) {
-            cipher = new Cipher(new String(Base32.decode(new String(input, encoding)), encoding), args[0]);
+            cipher = new Cipher(new String(input, encoding), keys, true);
+            cipher.transpose();
+            cipher.vigenere();
+            output = Base32.decode(cipher.getText());
         } else {
-            cipher = new Cipher(Base32.encode(input), args[0]);
+            cipher = new Cipher(Base32.encode(input), keys, false);
+            cipher.vigenere();
+            cipher.transpose();
+            output = cipher.getText().getBytes(encoding);
         }
-        cipher.transpose(cli.hasOption('d'));
         if (cli.hasOption('o')) {
-            Files.write(Paths.get(cli.getOptionValue('o')), cipher.getText().getBytes(encoding), CREATE);
+            Files.write(Paths.get(cli.getOptionValue('o')), output, CREATE);
         } else {
-            System.out.println("\n"+cipher.getText());
+            System.out.println("\n"+new String(output, encoding));
         }
     }
 
