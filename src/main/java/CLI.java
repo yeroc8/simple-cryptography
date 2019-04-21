@@ -7,7 +7,7 @@ import static java.nio.file.StandardOpenOption.*;
 import java.io.IOException;
 
 
-public class Main {
+public class CLI {
 
     private static Options options = new Options();
 
