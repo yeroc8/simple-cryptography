@@ -44,7 +44,11 @@ public class Cipher {
         if (keysUsed >= keys.length) {
             throw new IllegalStateException("No keys remaining");
         }
-        return keys[keysUsed++];
+        if (backwards) {
+            return keys[keys.length - keysUsed++];
+        } else {
+            return keys[keysUsed++];
+        }
     }
 
     public void transpose() throws IllegalStateException {

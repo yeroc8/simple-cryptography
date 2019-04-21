@@ -30,6 +30,10 @@ public class CLI {
             printHelp();
             return;
         }
+        if (args[0].length() == 1) {
+            System.err.println("Key must have at least 2 characters");
+            return;
+        }
         try {
             run(args);
         } catch (ParseException e) {
