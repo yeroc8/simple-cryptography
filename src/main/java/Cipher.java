@@ -45,7 +45,7 @@ public class Cipher {
             throw new IllegalStateException("No keys remaining");
         }
         if (backwards) {
-            return keys[keys.length - keysUsed++];
+            return keys[keys.length - ++keysUsed];
         } else {
             return keys[keysUsed++];
         }
