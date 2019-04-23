@@ -18,12 +18,12 @@ public class Base32 {
                 val <<= 1;
             }
         }
-        //If binary is not divisable by 5, adds zeroes until it is
+        //If binary is not divisible by 5, adds zeroes until it is
         while (binary.length() % 5 != 0) {
             binary.append('0');
         }
         /*
-        Takes 5 characters from binary, converts them to decmial, and inserts the character whose index is equal to said
+        Takes 5 characters from binary, converts them to decimal, and inserts the character whose index is equal to said
         number into base32.
         */
         StringBuilder base32 = new StringBuilder();
@@ -46,13 +46,16 @@ public class Base32 {
         //Converts text to binary
         for (int i = 0; i < text.length(); i++) {
             conversionValue = CONVERSION.indexOf(text.charAt(i));
-            //If any leading zeroes get deleted, adds them back in
-            if (Integer.toBinaryString(conversionValue).length() < 5) {
-                for (int j = 0; j < (5 - Integer.toBinaryString(conversionValue).length()); j++) {
-                    binary.append('0');
+            // ignore any non-base32 characters
+            if (conversionValue != -1) {
+                //If any leading zeroes get deleted, adds them back in
+                if (Integer.toBinaryString(conversionValue).length() < 5) {
+                    for (int j = 0; j < (5 - Integer.toBinaryString(conversionValue).length()); j++) {
+                        binary.append('0');
+                    }
                 }
+                binary.append(Integer.toBinaryString(conversionValue));
             }
-            binary.append(Integer.toBinaryString(conversionValue));
         }
         /*
         Takes eight binary characters and converts them to decimal, then converts that decimal number to a char
