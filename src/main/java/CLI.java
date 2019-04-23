@@ -6,7 +6,9 @@ import java.nio.file.Paths;
 import static java.nio.file.StandardOpenOption.*;
 import java.io.IOException;
 
-
+/**
+ * @author yeroc8
+ */
 public class CLI {
 
     private static Options options = new Options();

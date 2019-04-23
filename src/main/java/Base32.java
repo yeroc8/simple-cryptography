@@ -1,3 +1,6 @@
+/**
+ * @author ngahman
+ */
 public class Base32 {
 
     private final static String CONVERSION = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdef";

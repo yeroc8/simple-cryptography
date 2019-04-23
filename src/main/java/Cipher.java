@@ -1,3 +1,6 @@
+/**
+ * @author yeroc8
+ */
 public class Cipher {
 
     protected String text;
