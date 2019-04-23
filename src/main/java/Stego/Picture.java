@@ -13,7 +13,16 @@
  *  -------
  *   - pixel (0, 0) is upper left hand corner
  *
- */
+ *   - see also GrayPicture.java for a grayscale version
+ *
+ *************************************************************************/
+ 
+ /************************************************************************
+  *Used by Color Reader - Team 1                                         *
+  *We found this picture class on the internet and utilized it in its raw*
+  *form. Used as an member variable in our ColorFinder class to hold the *
+  *current picture we are trying to identify colors in.                  *
+  ************************************************************************/
 
 package Stego;
 import javax.imageio.ImageIO;
@@ -42,6 +51,11 @@ import java.net.URL;
  *  or PNG format, or the user can create a blank image of a given size.
  *  This class includes methods for displaying the image in a window on
  *  the screen or saving to a file.
+ *  <p>
+ *  For additional documentation, see
+ *  <a href="http://www.cs.princeton.edu/introcs/31datatype">Section 3.1</a> of
+ *  <i>Introduction to Programming in Java: An Interdisciplinary Approach</i>
+ *  by Robert Sedgewick and Kevin Wayne.
  */
 public final class Picture implements ActionListener 
 {
