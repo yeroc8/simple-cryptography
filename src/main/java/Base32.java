@@ -49,16 +49,13 @@ public class Base32 {
         //Converts text to binary
         for (int i = 0; i < text.length(); i++) {
             conversionValue = CONVERSION.indexOf(text.charAt(i));
-            // ignore any non-base32 characters
-            if (conversionValue != -1) {
-                //If any leading zeroes get deleted, adds them back in
-                if (Integer.toBinaryString(conversionValue).length() < 5) {
-                    for (int j = 0; j < (5 - Integer.toBinaryString(conversionValue).length()); j++) {
-                        binary.append('0');
-                    }
+            //If any leading zeroes get deleted, adds them back in
+            if (Integer.toBinaryString(conversionValue).length() < 5) {
+                for (int j = 0; j < (5 - Integer.toBinaryString(conversionValue).length()); j++) {
+                    binary.append('0');
                 }
-                binary.append(Integer.toBinaryString(conversionValue));
             }
+            binary.append(Integer.toBinaryString(conversionValue));
         }
         /*
         Takes eight binary characters and converts them to decimal, then converts that decimal number to a char

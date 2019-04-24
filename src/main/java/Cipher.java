@@ -13,9 +13,14 @@ public class Cipher {
             if (!keys[i].matches("[A-Za-z]+")) {
                 throw new IllegalArgumentException("Key must contain only english letters");
             }
-            if (!text.matches("[A-Za-z]+")) {
-                throw new IllegalArgumentException("Internal error: Unknown character detected in Cipher.text");
+            // only keep alphabetic chars in text
+            StringBuilder builder = new StringBuilder();
+            for (char c : text.toCharArray()) {
+                if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')) {
+                    builder.append(c);
+                }
             }
+            text = builder.toString();
             if (keys[i].length() > text.length()) {
                 keys[i] = keys[i].substring(0, text.length());
             }
@@ -48,7 +53,7 @@ public class Cipher {
             throw new IllegalStateException("No keys remaining");
         }
         if (backwards) {
-            return keys[keys.length - keysUsed++];
+            return keys[keys.length - ++keysUsed];
         } else {
             return keys[keysUsed++];
         }
