@@ -92,11 +92,16 @@ public class Cipher {
             int inverseShift = row.length - 1 - shiftAmount;
             // save end part that would get overwritten
             char[] overflow = new char[shiftAmount];
+            System.out.println(shiftAmount + " " + inverseShift + " " + row.length);
+            System.out.println(row);
             System.arraycopy(row, inverseShift + 1, overflow, 0, shiftAmount);
+            System.out.println(overflow);
             // shift beginning to end
             System.arraycopy(row, 1, row, shiftAmount + 1, inverseShift);
+            System.out.println(row);
             // put overwritten end at beginning
             System.arraycopy(overflow, 0, row, 1, shiftAmount);
+            System.out.println(row);
         }
         // reconstruct text
         char[] textArr = new char[textLen];
@@ -104,6 +109,7 @@ public class Cipher {
             textArr[i] = matrix[i % keyLen][i / keyLen + 1];
         }
         text = new String(textArr);
+        System.out.println("\n\n");
     }
 
     public void vigenere() throws IllegalStateException {
