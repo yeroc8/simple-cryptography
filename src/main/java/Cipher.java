@@ -73,10 +73,11 @@ public class Cipher {
             matrix[i % keyLen][i / keyLen + 1] = text.charAt(i);
         }
         if (!backwards) {
-            // fill empty slots in last column with Xs
+            // fill empty slots in last column with xs
             for (char[] row : matrix) {
                 if (row[row.length - 1] == 0) {
-                    row[row.length - 1] = 'X';
+                    row[row.length - 1] = 'x';
+                    textLen++;
                 }
             }
         }
@@ -100,9 +101,14 @@ public class Cipher {
         }
         // reconstruct text
         char[] textArr = new char[textLen];
+        char c;
         for (int i = 0; i < textLen; i++) {
-            textArr[i] = matrix[i % keyLen][i / keyLen + 1];
+            c = matrix[i % keyLen][i / keyLen + 1];
+            if (!backwards || c != 'x') {
+                textArr[i] = c;
+            }
         }
+
         text = new String(textArr);
     }
 
