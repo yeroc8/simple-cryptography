@@ -3,24 +3,24 @@
  */
 public class Cipher {
 
-    protected String text;
-    protected String[] keys;
-    protected int keysUsed = 0;
-    protected boolean backwards;
+    private String text;
+    private String[] keys;
+    private int keysUsed = 0;
+    private boolean backwards;
 
     public Cipher(String text, String[] keys, boolean backwards) throws IllegalArgumentException {
+        // only keep alphabetic chars in text
+        StringBuilder builder = new StringBuilder();
+        for (char c : text.toCharArray()) {
+            if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')) {
+                builder.append(c);
+            }
+        }
+        text = builder.toString();
         for (int i = 0; i < keys.length; i++) {
             if (!keys[i].matches("[A-Za-z]+")) {
                 throw new IllegalArgumentException("Key must contain only english letters");
             }
-            // only keep alphabetic chars in text
-            StringBuilder builder = new StringBuilder();
-            for (char c : text.toCharArray()) {
-                if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')) {
-                    builder.append(c);
-                }
-            }
-            text = builder.toString();
             if (keys[i].length() > text.length()) {
                 keys[i] = keys[i].substring(0, text.length());
             }
