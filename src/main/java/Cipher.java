@@ -9,14 +9,16 @@ public class Cipher {
     private boolean backwards;
 
     public Cipher(String text, String[] keys, boolean backwards) throws IllegalArgumentException {
-        // only keep alphabetic chars in text
-        StringBuilder builder = new StringBuilder();
-        for (char c : text.toCharArray()) {
-            if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')) {
-                builder.append(c);
+        if (backwards) {
+            // only keep alphabetic chars in text
+            StringBuilder builder = new StringBuilder();
+            for (char c : text.toCharArray()) {
+                if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')) {
+                    builder.append(c);
+                }
             }
+            text = builder.toString();
         }
-        text = builder.toString();
         for (int i = 0; i < keys.length; i++) {
             if (!keys[i].matches("[A-Za-z]+")) {
                 throw new IllegalArgumentException("Key must contain only english letters");
@@ -63,7 +65,7 @@ public class Cipher {
         String key = getKey();
         int textLen = text.length();
         int keyLen = key.length();
-        char[][] matrix = new char[keyLen][(textLen + keyLen - 1) / keyLen + 1]; // round up width and add key space
+        char[][] matrix = new char[keyLen][((textLen + keyLen - 1) / keyLen) + 1]; // round up width and add key space
         // put key in first column
         for (int i = 0; i < keyLen; i++) {
             matrix[i][0] = key.charAt(i);
@@ -104,6 +106,7 @@ public class Cipher {
         char c;
         for (int i = 0; i < textLen; i++) {
             c = matrix[i % keyLen][i / keyLen + 1];
+            // don't include xs in output when decrypting
             if (!backwards || c != 'x') {
                 textArr[i] = c;
             }

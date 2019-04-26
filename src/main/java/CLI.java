@@ -70,13 +70,13 @@ public class CLI {
         byte[] output;
         if (cli.hasOption('d')) {
             cipher = new Cipher(new String(input, encoding), keys, true);
-            cipher.transpose();
             cipher.vigenere();
+            cipher.transpose();
             output = Base32.decode(cipher.getText());
         } else {
             cipher = new Cipher(Base32.encode(input), keys, false);
-            cipher.vigenere();
             cipher.transpose();
+            cipher.vigenere();
             output = cipher.getText().getBytes(encoding);
         }
         if (cli.hasOption('o')) {
