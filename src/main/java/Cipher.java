@@ -11,6 +11,13 @@ public class Cipher {
     private int keysUsed = 0;
     private boolean backwards;
 
+    /**
+     * Constructs a new Cipher instance
+     * @param text the text to run the ciphers on
+     * @param keys the keys to use for the ciphers
+     * @param backwards decrypt instead of encrypt
+     * @throws IllegalArgumentException unless all the keys only contain english letters
+     */
     public Cipher(String text, String[] keys, boolean backwards) throws IllegalArgumentException {
         if (backwards) {
             // only keep alphabetic chars in text
@@ -53,6 +60,11 @@ public class Cipher {
         }
     }
 
+    /**
+     * Retrieves the next stored key
+     * @return the next key
+     * @throws IllegalStateException if there are no keys left to use
+     */
     private String getKey() throws IllegalStateException {
         if (keysUsed >= keys.length) {
             throw new IllegalStateException("No keys remaining");
@@ -64,6 +76,10 @@ public class Cipher {
         }
     }
 
+    /**
+     * Uses a transposition cipher on the text
+     * @throws IllegalStateException if there are no keys left to use
+     */
     public void transpose() throws IllegalStateException {
         String key = getKey();
         int textLen = text.length();
@@ -118,6 +134,10 @@ public class Cipher {
         text = new String(textArr);
     }
 
+    /**
+     * Uses a basic Vigenere cipher on the text
+     * @throws IllegalStateException if there are no keys left to use
+     */
     public void vigenere() throws IllegalStateException {
         String key = getKey();
         StringBuilder newText = new StringBuilder();
@@ -135,6 +155,10 @@ public class Cipher {
         text = newText.toString();
     }
 
+    /**
+     * Uses a case-mixing algorithm on the text
+     * @throws IllegalStateException if there are no keys left to use
+     */
     public void caseMix() throws IllegalStateException {
         BitSet key = BitSet.valueOf(getKey().getBytes());
         BitSet cases = new BitSet(text.length());
