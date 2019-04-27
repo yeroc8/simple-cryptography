@@ -145,6 +145,7 @@ public class Cipher {
         }
         cases.xor(key);
         // xor with repeated key (BROKEN)
+        // if cases bit is 0 and key bit is 1, does not flip?
 //        cases.stream().forEach(new IntConsumer() {
 //            @Override
 //            public void accept(int i) {
