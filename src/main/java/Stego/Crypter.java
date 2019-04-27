@@ -45,10 +45,9 @@ public class Crypter {
      * @param file insert the image file. Note: Make sure you defined the correct key while constructing Crypter object
      * @return Returns the String extracted from the picture
      */
-    public String deCrypt(String file) {
+    public String deCrypt(byte[] file) {
         if (file.length() < 1)
             return null;
-        copy = new Picture(file);
         int allowed = deCalcAllowed(1, 1);
         int count = 0;
         String text = "";
