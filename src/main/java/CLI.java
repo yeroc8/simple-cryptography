@@ -62,14 +62,16 @@ public class CLI {
         if (encoding == null) {
             encoding = "UTF-8";
         }
-        String[] keys = new String[2];
-        int keySplit = args[0].length()/2;
+        String[] keys = new String[3];
+        int keySplit = args[0].length()/3;
         keys[0] = args[0].substring(0, keySplit);
-        keys[1] = args[0].substring(keySplit);
+        keys[1] = args[0].substring(keySplit, keySplit*2);
+        keys[2] = args[0].substring(keySplit*2);
         Cipher cipher;
         byte[] output;
         if (cli.hasOption('d')) {
             cipher = new Cipher(new String(input, encoding), keys, true);
+            cipher.caseMix();
             cipher.vigenere();
             cipher.transpose();
             output = Base32.decode(cipher.getText());
@@ -77,6 +79,7 @@ public class CLI {
             cipher = new Cipher(Base32.encode(input), keys, false);
             cipher.transpose();
             cipher.vigenere();
+            cipher.caseMix();
             output = cipher.getText().getBytes(encoding);
         }
         if (cli.hasOption('o')) {

@@ -15,10 +15,9 @@ public class Base32 {
         StringBuilder binary = new StringBuilder();
         //Converts the bytes to binary
         for (byte b : bytes) {
-            int val = b;
             for (int i = 0; i < 8; i++) {
-                binary.append((val & 128) == 0 ? 0 : 1);
-                val <<= 1;
+                binary.append((b & 128) == 0 ? 0 : 1);
+                b <<= 1;
             }
         }
         //If binary is not divisible by 5, adds zeroes until it is

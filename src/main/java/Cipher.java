@@ -1,3 +1,6 @@
+import java.util.BitSet;
+import java.util.function.IntConsumer;
+
 /**
  * @author yeroc8
  */
@@ -128,6 +131,37 @@ public class Cipher {
                 caesarShift = -(26 - caesarShift); // go backwards instead if would shift past Z
             }
             newText.append((char) (text.charAt(i) + caesarShift));
+        }
+        text = newText.toString();
+    }
+
+    public void caseMix() throws IllegalStateException {
+        BitSet key = BitSet.valueOf(getKey().getBytes());
+        BitSet cases = new BitSet(text.length());
+        for (int i = 0; i < text.length(); i++) {
+            if (text.charAt(i) >= 'a') {
+                cases.set(i);
+            }
+        }
+        cases.xor(key);
+        // xor with repeated key (BROKEN)
+//        cases.stream().forEach(new IntConsumer() {
+//            @Override
+//            public void accept(int i) {
+//                if (key.get(i % key.length())) {
+//                    cases.clear(i);
+//                } else {
+//                    cases.set(i);
+//                }
+//            }
+//        });
+        StringBuilder newText = new StringBuilder();
+        for (int i = 0; i < text.length(); i++) {
+            if (cases.get(i)) {
+                newText.append(Character.toLowerCase(text.charAt(i)));
+            } else {
+                newText.append(Character.toUpperCase(text.charAt(i)));
+            }
         }
         text = newText.toString();
     }
