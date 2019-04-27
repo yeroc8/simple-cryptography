@@ -72,7 +72,13 @@ public class CLI {
         Cipher cipher;
         byte[] output;
         if (cli.hasOption('d')) {
-            cipher = new Cipher(new String(input, encoding), keys, true);
+            String text;
+            if (cli.hasOption('s')) {
+                text = new Crypter(new StringBuilder(args[0]).reverse().toString()).deCrypt(input);
+            } else {
+                text = new String(input, encoding);
+            }
+            cipher = new Cipher(text, keys, true);
             cipher.caseMix();
             cipher.vigenere();
             cipher.transpose();

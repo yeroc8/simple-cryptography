@@ -2,7 +2,6 @@ package Stego;
 
 import java.awt.Color;
 import java.io.ByteArrayOutputStream;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
@@ -42,28 +41,28 @@ public class Crypter {
     /**
      * Decrypt the String from the picture
      *
-     * @param file insert the image file. Note: Make sure you defined the correct key while constructing Crypter object
+     * @param bytes the encrypted image bytes
      * @return Returns the String extracted from the picture
      */
-    public String deCrypt(byte[] file) {
-        if (file.length() < 1)
+    public String deCrypt(byte[] bytes) {
+        if (bytes.length < 1)
             return null;
-        int allowed = deCalcAllowed(1, 1);
+        int allowed = deCalcAllowed();
         int count = 0;
-        String text = "";
+        StringBuilder text = new StringBuilder();
 
         for (int i = 0; i < key.width(); i++)
             for (int j = 0; j < key.height(); j++) {
                 if (!(i == 1 && j == 1)) {
                     count++;
                     if (count == allowed) {
-                        text += deCryptChar(i, j);
+                        text.append(deCryptChar(i, j));
                         count = 0;
                     }
                 }
             }
 
-        return text;
+        return text.toString();
     }
 
     /**
@@ -78,7 +77,7 @@ public class Crypter {
         int count = 0;
 
         int allowed = (int) Math.floor(bytes / text.length()); // bytes between characters. includes char.
-        allowed(allowed, 1, 1);
+        allowed(allowed);
 
         //int badData = (int)Math.floor(bytes/allowed)-text.length();
 
@@ -149,8 +148,8 @@ public class Crypter {
         return a;
     }
 
-    private void allowed(int allowed, int x, int y) {
-        Color pix = key.get(x, y);
+    private void allowed(int allowed) {
+        Color pix = key.get(1, 1);
         int blue = pix.getBlue();
         int red = pix.getRed();
         int green = pix.getGreen();
@@ -180,13 +179,13 @@ public class Crypter {
         }
 
         pix = new Color(red, green, blue);
-        copy.set(x, y, pix);
+        copy.set(1, 1, pix);
 
 
     }
 
-    private int deCalcAllowed(int x, int y) {
-        Color d = difference(x, y);
+    private int deCalcAllowed() {
+        Color d = difference(1, 1);
         return (d.getRed() * 127 + d.getGreen() * 127) + d.getBlue();
     }
 
@@ -205,8 +204,7 @@ public class Crypter {
     private Coord split2(int a) {
         int r = (int) (Math.random() * a);
         a -= r;
-        Coord c = new Coord(a, r);
-        return c;
+        return new Coord(a, r);
     }
 
     private Coord split3(int a) {
@@ -221,8 +219,7 @@ public class Crypter {
             r -= z;
         }
 
-        Coord c = new Coord(a, r, z);
-        return c;
+        return new Coord(a, r, z);
     }
 
 
