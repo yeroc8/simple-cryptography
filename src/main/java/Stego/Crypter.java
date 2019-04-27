@@ -1,6 +1,8 @@
 package Stego;
 import java.awt.Color;
-
+import java.io.ByteArrayOutputStream;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 /**
  * This class encrypts text into image using key-picture. The same key-picture can be used to obtain the text from the image. 
  *  
@@ -66,13 +68,10 @@ public class Crypter{
 	 * @param file file name for result. Must be .png
 	 * @return Returns true, if everything went fine. False, if something went wrong. 
 	 */
-	public boolean encrypt(String text, String file){
+	public byte[] encrypt(String text, String file){
 		copy = new Picture(key.toString());		
 		countc = 0;		
 		int count=0;
-		
-		if(text.length() == 0) return false; // Nothing to encrypt
-		if(text.length() > bytes) return false; // The string is too long
 		
 		int allowed = (int) Math.floor(bytes/text.length()); // bytes between characters. includes char.				
 		allowed(allowed, 1, 1);		
@@ -94,14 +93,16 @@ public class Crypter{
 					}
 				}
 			
-			copy.save(file);
+			BufferedImage image = new BufferedImage(copy.getImage());
+         ByteArrayOutputStream bo = new ByteArrayOutputStream();
+         ImageIO.write(image, "png", bo );
+         byte[] b = bo.toByteArray();
+         return b;
 		}
 		catch(Exception e){
 			System.out.println("I'm sorry, something went wrong, probably invalid character, try using characters present in 8-bit ASCII");
-			return false;
 		}
-		
-		return true;		
+			
 	}
 	
 	private char deCryptChar(int x, int y){

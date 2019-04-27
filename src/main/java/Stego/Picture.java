@@ -72,7 +72,6 @@ public final class Picture implements ActionListener
         // set to TYPE_INT_ARGB to support transparency
         filename = w + "-by-" + h;
     }
-
     public String toString(){
     	return filename;
     }
@@ -241,5 +240,9 @@ public final class Picture implements ActionListener
         {
             save(chooser.getDirectory() + File.separator + chooser.getFile());
         }
+    }
+    public BufferedImage getImage()
+    {
+      return this.image;
     }
 }
