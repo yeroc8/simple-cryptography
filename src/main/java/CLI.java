@@ -1,4 +1,3 @@
-import Stego.Crypter;
 import org.apache.commons.cli.*;
 import org.apache.commons.io.IOUtils;
 import org.mozilla.universalchardet.UniversalDetector;
@@ -16,7 +15,6 @@ public class CLI {
 
     public static void main(String[] args) {
         options.addOption("h", "help", false, "display this message");
-        options.addOption("s", "stego", false, "use image steganography (encode into PNG)");
         options.addOption("d", "decode", false, "decode input instead of encode");
         options.addOption(Option.builder("i")
                 .longOpt("input")
@@ -72,13 +70,7 @@ public class CLI {
         Cipher cipher;
         byte[] output;
         if (cli.hasOption('d')) {
-            String text;
-            if (cli.hasOption('s')) {
-                text = new Crypter(new StringBuilder(args[0]).reverse().toString()).deCrypt(input);
-            } else {
-                text = new String(input, encoding);
-            }
-            cipher = new Cipher(text, keys, true);
+            cipher = new Cipher(new String(input, encoding), keys, true);
             cipher.caseMix();
             cipher.vigenere();
             cipher.transpose();
@@ -88,12 +80,7 @@ public class CLI {
             cipher.transpose();
             cipher.vigenere();
             cipher.caseMix();
-            if (cli.hasOption('s')) {
-                // use entire key reversed for an extra 4th key
-                output = new Crypter(new StringBuilder(args[0]).reverse().toString()).encrypt(cipher.getText());
-            } else {
-                output = cipher.getText().getBytes(encoding);
-            }
+            output = cipher.getText().getBytes(encoding);
         }
         if (cli.hasOption('o')) {
             Files.write(Paths.get(cli.getOptionValue('o')), output, CREATE);
