@@ -167,17 +167,6 @@ public class Cipher {
                 cases.set(i);
             }
         }
-//        cases.xor(key);
-        // xor with repeated key (BROKEN)
-        // if cases bit is 0 and key bit is 1, does not flip?
-//        cases.stream().forEach(new IntConsumer() {
-//            @Override
-//            public void accept(int i) {
-//                if (key.get(i % key.length())) {
-//                    cases.clear(i);
-//                }
-//            }
-//        });
         for (int i = 0; i < cases.length(); i++) {
             boolean cb = cases.get(i);
             boolean kb = key.get(i);
