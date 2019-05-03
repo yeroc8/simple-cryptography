@@ -9,6 +9,8 @@ public class Base32 {
     Takes the field text, converts it to binary, then takes the first 5 characters and converts them back to decimal.
     Then, the program inserts the character whose index is equal to said decimal number.  The program continues
     this until the entire binary String is used up.
+    @param byte[]
+    @return String
     */
     public static String encode(byte[] bytes) {
         //Declares variables
@@ -40,6 +42,8 @@ public class Base32 {
     Takes the field text, converts it to binary, then takes the first 8 characters and converts them back to decimal.
     Then, the program inserts the character whose unicode number is equal to said decimal number.  The program continues
     this until the entire binary String is used up.
+    @param String
+    @return byte[]
     */
     public static byte[] decode(String text) {
         //Declares variables
