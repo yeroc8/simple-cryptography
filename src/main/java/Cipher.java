@@ -51,7 +51,7 @@ public class Cipher {
      * @param c the char to get a number for
      * @return  the index of the char
      */
-    private int letterNum(char c) {
+    protected int letterNum(char c) {
         if (Character.isUpperCase(c)) {
             return c - 'A';
         } else {
@@ -64,7 +64,7 @@ public class Cipher {
      * @return the next key
      * @throws IllegalStateException if there are no keys left to use
      */
-    private String getKey() throws IllegalStateException {
+    protected String getKey() throws IllegalStateException {
         if (keysUsed >= keys.length) {
             throw new IllegalStateException("No keys remaining");
         }
