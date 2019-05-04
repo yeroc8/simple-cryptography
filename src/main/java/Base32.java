@@ -61,8 +61,8 @@ public class Base32 {
             binary.append(Integer.toBinaryString(conversionValue));
         }
         /*
-        Takes eight binary characters and converts them to decimal, then converts that decimal number to a char
-        which is added to normalText
+        Takes eight binary characters and converts them to decimal, then converts that decimal number to a byte
+        which is added to bytes
         */
         byte[] bytes = new byte[binary.length() / 8];
         for (int i = 0; i < (binary.length() / 8); i++) {
